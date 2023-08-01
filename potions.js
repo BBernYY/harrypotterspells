@@ -1,22 +1,20 @@
 function update(db){
-    db = db[Math.floor(Math.random() * db.length)].attributes
-    if (db.incantation == null){
-        db.incantation = db.name
+    if(db.side_effects != null){
+        db.effect = db.effect + ", " + db.side_effects
     }
+    db = db[Math.floor(Math.random() * db.length)].attributes
     document.getElementById("name").innerHTML = db.name
-    document.getElementById("inc").innerHTML = db.incantation
+    document.getElementById("inc").innerHTML = db.characteristics
     document.getElementById("name").href = db.wiki
     document.getElementById("desc").innerHTML = db.effect
     document.getElementById("image").src = db.image
-    document.getElementById("category").innerHTML = db.category
+    document.getElementById("category").innerHTML = db.ingredients
 }
 var db = []
 // Fetch data from the API
 Promise.all([
-    fetch("https://api.potterdb.com/v1/spells?page[number]=1"),
-    fetch("https://api.potterdb.com/v1/spells?page[number]=2"),
-    fetch("https://api.potterdb.com/v1/spells?page[number]=3"),
-    fetch("https://api.potterdb.com/v1/spells?page[number]=4")
+    fetch("https://api.potterdb.com/v1/potions?page[number]=1"),
+    fetch("https://api.potterdb.com/v1/potions?page[number]=2")
 ])
     .then(responses => Promise.all(responses.map(response => response.json())))
     .then(data => {
